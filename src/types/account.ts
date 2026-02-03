@@ -8,9 +8,8 @@ export const ACCOUNT_TYPE_LABELS =
     value: key,
     label: key === "LDAP" ? AccountType.LDAP : "Локальная",
   }));
-
 export interface Account {
-  id?: string;
+  id: string;
   label: string;
   type: AccountType;
   login: string;
