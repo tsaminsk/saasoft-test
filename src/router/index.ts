@@ -12,7 +12,13 @@ const routes: RouteRecordRaw[] = [
     path: "/form",
     name: "Form",
     component: () => import("@/views/FormView.vue"),
-    meta: { title: "Управление учетными записями " },
+    meta: { title: "Управление учетными записями" },
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: () => import("@/views/AboutView.vue"),
+    meta: { title: "О проекте" },
   },
   {
     path: "/:pathMatch(.*)*",
