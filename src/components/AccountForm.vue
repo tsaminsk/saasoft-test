@@ -2,23 +2,25 @@
 import { AccountType, ACCOUNT_TYPE_LABELS } from "@/types/account";
 import { TrashOutline } from "@vicons/ionicons5";
 import { useAccountsStore } from "@/stores/accounts";
-import { useMessage } from 'naive-ui'
+import { useMessage } from "naive-ui";
+import { AddCircleOutline } from "@vicons/ionicons5";
 
 const accountsStore = useAccountsStore();
 
-const message = useMessage()
+const message = useMessage();
 
 const typeOptions = ACCOUNT_TYPE_LABELS;
 
 const removeItem = (id: string) => {
-  const label = accountsStore.removeItem(id)
-  message.info(`Удален элемент с меткой "${label}"`)
-}
+  const label = accountsStore.removeItem(id);
+  message.info(`Удален элемент с меткой "${label}"`);
+};
 </script>
 
 <template>
   <div class="form">
     <n-grid
+      v-if="accountsStore.data?.length"
       class="form-grid"
       :x-gap="20"
       :y-gap="10"
@@ -99,6 +101,20 @@ const removeItem = (id: string) => {
         </n-gi>
       </template>
     </n-grid>
+    <div v-else class="">
+      <n-empty description="Добавьте первую запись">
+        <template #extra>
+          <n-button type="primary" size="large" @click="$emit('add')">
+            <template #icon>
+              <n-icon>
+                <AddCircleOutline />
+              </n-icon>
+            </template>
+            Добавить
+          </n-button>
+        </template>
+      </n-empty>
+    </div>
   </div>
 </template>
 
