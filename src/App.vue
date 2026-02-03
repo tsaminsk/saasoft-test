@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { darkTheme } from "naive-ui";
-import MainContent from "@/components/MainContent.vue";
+import { lightTheme } from "naive-ui";
+import Layout from '@/components/layout/Layout.vue'
 </script>
 
 <template>
-  <n-config-provider :theme="darkTheme">
+  <n-config-provider :theme="lightTheme">
     <n-global-style />
-    <MainContent />
+    <Layout>
+      <RouterView />
+    </Layout>
   </n-config-provider>
 </template>

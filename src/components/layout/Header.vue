@@ -16,6 +16,9 @@
 
 <style scoped>
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 0;
