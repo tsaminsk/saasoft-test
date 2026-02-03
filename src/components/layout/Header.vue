@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import router from '@/router';
+
+const goHome = () => {
+  router.push({ name: 'Home' })
+}
 </script>
 
 <template>
   <header class="header">
     <div class="header-content container">
-      <div class="logo-text">Account Manager</div>
+      <div class="logo-text" @click="goHome">Account Manager</div>
       <div class="header-actions">
         <n-tag type="success" size="small">
           Vue 3 + TypeScript
@@ -50,6 +55,7 @@
   color: white;
   margin: 0;
   letter-spacing: -0.5px;
+  cursor: pointer;
 }
 
 .header-actions {

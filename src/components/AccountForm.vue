@@ -1,19 +1,14 @@
 <script setup lang="ts">
-import { Account, AccountType, ACCOUNT_TYPE_LABELS } from "@/types/account";
+import { AccountType, ACCOUNT_TYPE_LABELS } from "@/types/account";
 import { TrashOutline } from "@vicons/ionicons5";
 import { useAccountsStore } from "@/stores/accounts";
 import { useMessage } from 'naive-ui'
-// import { computed } from "vue";
 
 const accountsStore = useAccountsStore();
 
 const message = useMessage()
 
 const typeOptions = ACCOUNT_TYPE_LABELS;
-
-const onUpdate = (value: string, id: string, label: string) => {
-  console.log("onUpdate", value, id, label, accountsStore.data);
-};
 
 const removeItem = (id: string) => {
   const label = accountsStore.removeItem(id)
@@ -56,7 +51,6 @@ const removeItem = (id: string) => {
               }"
               :maxlength="200"
               placeholder="Введите метки"
-              @update:value="onUpdate($event, item.id, 'label')"
             />
           </div>
         </n-gi>

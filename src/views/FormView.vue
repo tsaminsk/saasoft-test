@@ -6,7 +6,6 @@ import { useAccountsStore } from "@/stores/accounts";
 const accountsStore = useAccountsStore();
 
 const addAccount = () => {
-  // Пока пусто, реализуем в компоненте формы
   accountsStore.addItem()
 };
 </script>
@@ -64,5 +63,6 @@ const addAccount = () => {
 
 .content {
   margin-top: 24px;
+  padding-bottom: 36px;
 }
 </style>
