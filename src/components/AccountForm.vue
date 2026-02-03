@@ -4,6 +4,9 @@ import { TrashOutline } from "@vicons/ionicons5";
 import { useAccountsStore } from "@/stores/accounts";
 import { useMessage } from "naive-ui";
 import { AddCircleOutline } from "@vicons/ionicons5";
+import { useWindowSize } from "@/composables/useWindowSize";
+
+const { isMobile } = useWindowSize();
 
 const accountsStore = useAccountsStore();
 
@@ -22,25 +25,36 @@ const removeItem = (id: string) => {
     <n-grid
       v-if="accountsStore.data?.length"
       class="form-grid"
-      :x-gap="20"
+      :x-gap="isMobile ? 10 : 20"
       :y-gap="10"
-      :cols="5"
-      style="grid-template-columns: 1fr 20% 1fr 1fr 60px"
+      :cols="isMobile ? 3 : 5"
+      :style="{
+        'grid-template-columns': isMobile
+          ? '1fr 1fr 20px'
+          : '1fr 20% 1fr 1fr 60px',
+      }"
       item-responsive
       layout-shift-disabled
     >
       <n-gi>
         <div class="form-grid__title">Метки</div>
       </n-gi>
-      <n-gi>
-        <div class="form-grid__title">Тип записи</div>
-      </n-gi>
-      <n-gi>
-        <div class="form-grid__title">Логин</div>
-      </n-gi>
-      <n-gi :span="2">
-        <div class="form-grid__title">Пароль</div>
-      </n-gi>
+      <template v-if="isMobile">
+        <n-gi :span="2">
+          <div class="form-grid__title">Тип записи / Логин / Пароль</div>
+        </n-gi>
+      </template>
+      <template v-else>
+        <n-gi>
+          <div class="form-grid__title">Тип записи</div>
+        </n-gi>
+        <n-gi>
+          <div class="form-grid__title">Логин</div>
+        </n-gi>
+        <n-gi :span="2">
+          <div class="form-grid__title">Пароль</div>
+        </n-gi>
+      </template>
       <template v-for="item in accountsStore.data" :key="item.id">
         <n-gi>
           <div class="form-grid__ceil">
@@ -56,32 +70,55 @@ const removeItem = (id: string) => {
             />
           </div>
         </n-gi>
-        <n-gi>
-          <div class="form-grid__ceil">
-            <n-select v-model:value="item.type" :options="typeOptions" />
-          </div>
-        </n-gi>
-        <n-gi :span="item.type === AccountType.LDAP ? 2 : 1">
-          <div class="form-grid__ceil">
-            <n-input
-              v-model:value="item.login"
-              type="text"
-              placeholder="Логин"
-            />
-          </div>
-        </n-gi>
-        <n-gi v-if="item.type === AccountType.locale">
-          <div class="form-grid__ceil">
-            <n-input
-              v-model:value="item.password"
-              type="password"
-              placeholder="Пароль"
-              show-password-on="mousedown"
-              :minlength="8"
-              :max-length="48"
-            />
-          </div>
-        </n-gi>
+        <template v-if="isMobile">
+          <n-gi>
+            <div class="form-grid__ceil">
+              <n-select v-model:value="item.type" :options="typeOptions" />
+              <n-input
+                v-model:value="item.login"
+                type="text"
+                placeholder="Логин"
+              />
+              <n-input
+                v-if="item.type === AccountType.locale"
+                v-model:value="item.password"
+                type="password"
+                placeholder="Пароль"
+                show-password-on="mousedown"
+                :minlength="8"
+                :max-length="48"
+              />
+            </div>
+          </n-gi>
+        </template>
+        <template v-else>
+          <n-gi>
+            <div class="form-grid__ceil">
+              <n-select v-model:value="item.type" :options="typeOptions" />
+            </div>
+          </n-gi>
+          <n-gi :span="item.type === AccountType.LDAP ? 2 : 1">
+            <div class="form-grid__ceil">
+              <n-input
+                v-model:value="item.login"
+                type="text"
+                placeholder="Логин"
+              />
+            </div>
+          </n-gi>
+          <n-gi v-if="item.type === AccountType.locale">
+            <div class="form-grid__ceil">
+              <n-input
+                v-model:value="item.password"
+                type="password"
+                placeholder="Пароль"
+                show-password-on="mousedown"
+                :minlength="8"
+                :max-length="48"
+              />
+            </div>
+          </n-gi>
+        </template>
         <n-gi>
           <div class="form-grid__ceil form-grid__ceil--actions">
             <n-popconfirm
@@ -129,5 +166,13 @@ const removeItem = (id: string) => {
 
 .form-grid__action-icon {
   width: 20px;
+}
+
+@media (width < 768px) {
+  .form-grid__ceil {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 </style>

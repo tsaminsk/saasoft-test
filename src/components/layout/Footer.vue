@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useWindowSize } from "@/composables/useWindowSize";
+
+const { isMobile } = useWindowSize();
 
 const currentYear = computed(() => new Date().getFullYear())
 </script>
 
 <template>
   <footer class="footer">
-    <div class="footer-content container">
+    <div class="footer-content container" :class="{ 'footer-content--center': isMobile}">
       <div class="footer-left">
         <p>© {{ currentYear }} Account Manager. All rights reserved.</p>
       </div>
-      <div class="footer-links">
+      <div v-if="!isMobile" class="footer-links">
         <n-tag type="info" size="small">
           Made with ❤️ using Vue 3
         </n-tag>
@@ -34,6 +37,10 @@ const currentYear = computed(() => new Date().getFullYear())
   margin: 0 auto;
   padding: 0 24px;
   height: 100%;
+}
+
+.footer-content--center {
+  justify-content: center;
 }
 
 .footer-left p {
