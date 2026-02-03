@@ -1,29 +1,26 @@
 <script setup lang="ts">
-import { Account, AccountType, ACCOUNT_TYPE_LABELS } from "@/types/account";
+import { AccountType, ACCOUNT_TYPE_LABELS } from "@/types/account";
 import { TrashOutline } from "@vicons/ionicons5";
 import { useAccountsStore } from "@/stores/accounts";
-import { useMessage } from 'naive-ui'
-// import { computed } from "vue";
+import { useMessage } from "naive-ui";
+import { AddCircleOutline } from "@vicons/ionicons5";
 
 const accountsStore = useAccountsStore();
 
-const message = useMessage()
+const message = useMessage();
 
 const typeOptions = ACCOUNT_TYPE_LABELS;
 
-const onUpdate = (value: string, id: string, label: string) => {
-  console.log("onUpdate", value, id, label, accountsStore.data);
-};
-
 const removeItem = (id: string) => {
-  const label = accountsStore.removeItem(id)
-  message.info(`Удален элемент с меткой "${label}"`)
-}
+  const label = accountsStore.removeItem(id);
+  message.info(`Удален элемент с меткой "${label}"`);
+};
 </script>
 
 <template>
   <div class="form">
     <n-grid
+      v-if="accountsStore.data?.length"
       class="form-grid"
       :x-gap="20"
       :y-gap="10"
@@ -56,7 +53,6 @@ const removeItem = (id: string) => {
               }"
               :maxlength="200"
               placeholder="Введите метки"
-              @update:value="onUpdate($event, item.id, 'label')"
             />
           </div>
         </n-gi>
@@ -105,6 +101,20 @@ const removeItem = (id: string) => {
         </n-gi>
       </template>
     </n-grid>
+    <div v-else class="">
+      <n-empty description="Добавьте первую запись">
+        <template #extra>
+          <n-button type="primary" size="large" @click="$emit('add')">
+            <template #icon>
+              <n-icon>
+                <AddCircleOutline />
+              </n-icon>
+            </template>
+            Добавить
+          </n-button>
+        </template>
+      </n-empty>
+    </div>
   </div>
 </template>
 

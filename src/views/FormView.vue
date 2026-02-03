@@ -6,7 +6,6 @@ import { useAccountsStore } from "@/stores/accounts";
 const accountsStore = useAccountsStore();
 
 const addAccount = () => {
-  // Пока пусто, реализуем в компоненте формы
   accountsStore.addItem()
 };
 </script>
@@ -14,7 +13,7 @@ const addAccount = () => {
 <template>
   <div class="container px-1">
     <n-card class="card" title="Управление учетными записями">
-      <template #header-extra>
+      <template v-if="accountsStore.data?.length" #header-extra>
         <n-button type="primary" size="large" @click="addAccount">
           <template #icon>
             <n-icon>
@@ -43,7 +42,7 @@ const addAccount = () => {
       </div>
 
       <div class="content">
-        <AccountForm />
+        <AccountForm @add="addAccount"/>
       </div>
     </n-card>
   </div>
@@ -64,5 +63,6 @@ const addAccount = () => {
 
 .content {
   margin-top: 24px;
+  padding-bottom: 36px;
 }
 </style>
