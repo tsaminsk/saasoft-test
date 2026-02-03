@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { AddCircleOutline, InformationCircleOutline } from "@vicons/ionicons5";
 import AccountForm from "@/components/AccountForm.vue";
+import { useAccountsStore } from "@/stores/accounts";
+
+const accountsStore = useAccountsStore();
 
 const addAccount = () => {
   // Пока пусто, реализуем в компоненте формы
-  console.log("Add account");
+  accountsStore.addItem()
 };
 </script>
 
