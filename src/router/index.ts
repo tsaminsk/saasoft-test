@@ -23,13 +23,13 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 
 // Динамическое обновление title страницы
 router.beforeEach((to) => {
-  // document.title = to.meta.title || "Account Manager";
+  document.title = to.meta.title || "Account Manager";
 });
 
 export default router;
